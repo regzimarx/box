@@ -1,0 +1,31 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Box</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+</head>
+
+<body ng-app="core">
+    <ui-view></ui-view>
+
+    {# ANGULAR SCRIPTS #}
+    <script src="{% static 'node_modules/angular/angular.min.js' %}"></script>
+    <script src="{% static 'node_modules/angular-ui-router/release/angular-ui-router.min.js' %}"></script>
+
+    <script src="{% static 'apps/app.js' %}"></script>
+    {% if user.is_authenticated %}
+        <script src="{% static 'apps/users/routes.js' %}"></script>
+    {% else %}
+        <script src="{% static 'apps/routes.js' %}"></script>
+    {% endif %}
+
+    <script src="{% static 'apps/users/controllers.js' %}"></script>
+    <script src="{% static 'apps/users/services.js' %}"></script>
+</body>
+
+</html>
