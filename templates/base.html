@@ -16,6 +16,7 @@
     {# ANGULAR SCRIPTS #}
     <script src="{% static 'node_modules/angular/angular.min.js' %}"></script>
     <script src="{% static 'node_modules/angular-ui-router/release/angular-ui-router.min.js' %}"></script>
+    <script src="{% static 'node_modules/ng-file-upload/dist/ng-file-upload-all.js' %}"></script>
 
     <script src="{% static 'apps/app.js' %}"></script>
     {% if user.is_authenticated %}
@@ -25,7 +26,9 @@
     {% endif %}
 
     <script src="{% static 'apps/users/controllers.js' %}"></script>
+    <script src="{% static 'apps/files/controllers.js' %}"></script>
     <script src="{% static 'apps/users/services.js' %}"></script>
+    <script src="{% static 'apps/files/services.js' %}"></script>
 </body>
 
 </html>

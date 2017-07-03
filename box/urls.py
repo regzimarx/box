@@ -7,6 +7,9 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^api/', include('files.urls')),
+    url(r'^api/', include('users.urls')),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [
