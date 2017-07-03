@@ -20,7 +20,9 @@ class FileAPI(viewsets.ViewSet):
         serializer = FileSerializer(data=self.request.data)
 
         if serializer.is_valid():
-            serializer.save(user=self.request.user)
+            file = self.request.data.get('file')
+            file_type = file.name.split('.')[-1]
+            serializer.save(user=self.request.user, name=file.name, file_type=file_type)
             return Response(serializer.data, status=HTTP_201_CREATED)
 
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)

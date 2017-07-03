@@ -1,10 +1,10 @@
-<div style="float: left;">
+<div>
     Drop files to upload:
-    <div ngf-drop ng-select ng-model="files" ngf-multiple="true" style="border: 1px dashed #333; padding: 50px;"">
+    <div ngf-drop ng-model="files" ngf-multiple="true" style="border: 1px dashed #333; padding: 50px;"">
 </div>
 
-<div style="float: right;">
+<div>
     <ul ng-repeat="file in data">
-        <a href="{{ file.file }}">{{ file.file }}</a>
+        <a href="{{ file.file }}" download>{{ file.name }}</a>
     </ul>
 </div>
