@@ -20,7 +20,6 @@
     });
 
     self.upload = function(files){
-
       angular.forEach(files, function(file){
 
         FileService.upload(file).then(function(resp){
@@ -30,7 +29,6 @@
         });
         
       });
-
     }
 
   }

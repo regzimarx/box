@@ -10,24 +10,25 @@ from rest_framework.permissions import (
 )
 
 from .serializers import FileSerializer
-from .models import File
+from .models import FileUpload
 
 class FileAPI(viewsets.ViewSet):
 
     permission_classes = (IsAuthenticated,)
 
-    def upload(self, data):
+    def upload(self, *args, **kwargs):
         serializer = FileSerializer(data=self.request.data)
 
         if serializer.is_valid():
-            file = self.request.data.get('file')
-            file_type = file.name.split('.')[-1]
-            serializer.save(user=self.request.user, name=file.name, file_type=file_type)
+            uploaded_file = self.request.data.get('uploaded_file')
+            file_type = uploaded_file.name.split('.')[-1]
+            serializer.save(user=self.request.user, name=uploaded_file.name, file_type=file_type)
             return Response(serializer.data, status=HTTP_201_CREATED)
 
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
-    def files(self, data):
-        files = File.objects.filter(user=self.request.user)
+    def files(self, *args, **kwargs):
+        
+        files = FileUpload.objects.filter(user=self.request.user)
         serializer = FileSerializer(files, many=True)
         return Response(serializer.data, status=HTTP_200_OK)

@@ -17,7 +17,7 @@
     function upload(file){
       return Upload.upload({
         url: '/api/upload/',
-        data: {file:file},
+        data: {uploaded_file: file},
         method: 'POST'
       });
     }

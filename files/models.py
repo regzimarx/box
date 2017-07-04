@@ -1,17 +1,15 @@
 from django.db import models
-from django.conf import settings
 
 def get_user_directory(instance, filename):
-    return '{}/{}'.format(instance.user.email, filename)
+    return 'user_{}/{}'.format(instance.user.id, filename)
 
-class File(models.Model):
+class FileUpload(models.Model):
 
-    file = models.FileField(upload_to=get_user_directory)
+    uploaded_file = models.FileField(upload_to=get_user_directory)
     name = models.CharField(max_length=225)
     file_type = models.CharField(max_length=16)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.ForeignKey('users.User')
     date_uploaded = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return '{}'.format(self.name)
-

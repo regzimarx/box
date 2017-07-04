@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from .models import File
+from .models import FileUpload
 
 class FileAdmin(admin.ModelAdmin):
     list_display = ('name', 'user', 'date_uploaded')
 
-admin.site.register(File, FileAdmin)
+admin.site.register(FileUpload, FileAdmin)

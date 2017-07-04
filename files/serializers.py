@@ -1,13 +1,13 @@
 from rest_framework import serializers
 
-from .models import File
+from .models import FileUpload
 
 class FileSerializer(serializers.ModelSerializer):
 
     user = serializers.ReadOnlyField(source='user.email')
-    file = serializers.FileField()
+    uploaded_file = serializers.FileField()
 
     class Meta:
-        model = File
-        fields = ('file', 'name', 'file_type', 'user', 'date_uploaded')
+        model = FileUpload
+        fields = ('uploaded_file', 'name', 'file_type', 'user', 'date_uploaded')
         read_only_fields = ('name', 'file_type')
