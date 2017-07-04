@@ -1,0 +1,10 @@
+<div>
+    Drop files to upload:
+    <div ngf-drop ng-model="files" ngf-multiple="true" style="border: 1px dashed #333; padding: 50px;"">
+</div>
+
+<div>
+    <ul ng-repeat="file in data">
+        <a href="{{ file.uploaded_file }}" download>{{ file.name }}</a>
+    </ul>
+</div>

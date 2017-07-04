@@ -8,6 +8,6 @@
 
   function IndexController ($scope) {
     var self = this;
-  };
+  }
 
 })();
