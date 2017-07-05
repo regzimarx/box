@@ -1,0 +1,56 @@
+/* line 1, ../sass/styles.scss */
+body {
+  font-family: 'Ubuntu', sans-serif;
+}
+
+/* line 5, ../sass/styles.scss */
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+/* line 10, ../sass/styles.scss */
+.upload-section {
+  width: 50%;
+  display: flex;
+}
+/* line 13, ../sass/styles.scss */
+.upload-section .upload-field-label {
+  position: absolute;
+  top: 100px;
+  left: 200px;
+}
+/* line 18, ../sass/styles.scss */
+.upload-section .upload-field {
+  width: 100%;
+  border: 1px dashed #333;
+  padding-bottom: 300px;
+}
+
+/* line 25, ../sass/styles.scss */
+.files-section {
+  margin-left: 20px;
+  width: 50%;
+}
+/* line 28, ../sass/styles.scss */
+.files-section .search-field {
+  width: 100%;
+}
+/* line 31, ../sass/styles.scss */
+.files-section .table {
+  border: 1px solid #666;
+  width: 100%;
+  padding-right: 100%;
+}
+/* line 36, ../sass/styles.scss */
+.files-section .table thead th {
+  padding-right: 100px;
+}
+/* line 41, ../sass/styles.scss */
+.files-section .table tbody tr {
+  padding-right: 100px;
+}
+/* line 43, ../sass/styles.scss */
+.files-section .table tbody tr td {
+  padding: 10px;
+}

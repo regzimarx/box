@@ -4,7 +4,7 @@
   angular
     .module('core', [
       'ui.router',
-      'ngFileUpload'
+      'ngFileUpload',
     ])
     .constant('TEMPLATE_URL', '/static/apps/templates/')
     .config(csrf)

@@ -5,11 +5,11 @@
     .service('FileService', FileService)
   ;
 
-  function FileService ($http, Upload) {
+  function FileService($http, Upload) {
 
     var action = {
-      upload : upload,
-      getFiles  : getFiles,
+      upload   : upload,
+      getFiles : getFiles,
     }
 
     return action;

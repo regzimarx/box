@@ -1,0 +1,49 @@
+body {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.upload-section {
+    width: 50%;
+    display: flex;
+    .upload-field-label {
+        position: absolute;
+        top: 100px;
+        left: 200px;
+    }
+    .upload-field {
+        width: 100%;
+        border: 1px dashed #333;
+        padding-bottom: 300px;
+    }
+}
+
+.files-section {
+    margin-left: 20px;
+    width: 50%;
+    .search-field {
+        width: 100%;
+    }
+    .table {
+        border: 1px solid #666;
+        width: 100%;
+        padding-right: 100%;
+        thead {
+            th {
+                padding-right: 100px;
+            }
+        }
+        tbody {
+            tr {
+                padding-right: 100px;
+                td {
+                    padding: 10px;
+                }
+            }
+        }
+    }
+}

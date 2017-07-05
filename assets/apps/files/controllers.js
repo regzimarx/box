@@ -6,8 +6,9 @@
     .controller('UploadController', UploadController)
   ;
 
-  function UploadController($scope, Upload, FileService){
+  function UploadController($scope, $location, Upload, FileService){
     var self = this;
+    $scope.baseUrl = $location.absUrl();
 
     FileService.getFiles().then().then(function(resp){
       $scope.data = resp.data;
