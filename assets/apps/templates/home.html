@@ -22,7 +22,8 @@
                     <td>{{ file.file_type }}</td>
                     <td>{{ file.date_uploaded | date: "MMM d, yyyy h:ss a" }}</td>
                     <td ng-show="hovered">
-                        <a href="{{ file.uploaded_file }}" download>Download</a>
+                        <button ng-click="ctrl.download(file.unique_code)">Download</button>
+                        <button ngclipboard data-clipboard-text="{{ baseUrl }}file/{{file.unique_code}}/">Copy share link</button>
                     </td>
                 </tr>
             </tbody>

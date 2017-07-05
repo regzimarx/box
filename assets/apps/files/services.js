@@ -10,6 +10,8 @@
     var action = {
       upload   : upload,
       getFiles : getFiles,
+      download : download,
+      getFile  : getFile,
     }
 
     return action;
@@ -24,6 +26,14 @@
 
     function getFiles(){
       return $http.get('/api/files/');
+    }
+
+    function download(unique_code){
+      return $http.get('/api/download/' + unique_code);
+    }
+
+    function getFile(unique_code){
+      return $http.get('/api/getFile/' + unique_code);
     }
 
   }
