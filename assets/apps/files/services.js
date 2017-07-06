@@ -29,7 +29,8 @@
     }
 
     function download(unique_code){
-      return $http.get('/api/download/' + unique_code);
+      var hostUrl = window.location.host;
+      window.open('/api/download/' + unique_code);
     }
 
     function getFile(unique_code){

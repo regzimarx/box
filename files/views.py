@@ -1,7 +1,7 @@
 import string
 import random
 import mimetypes
-import urllib
+import os
 
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -14,8 +14,9 @@ from rest_framework.permissions import (
     IsAuthenticated
 )
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.conf import settings
+from wsgiref.util import FileWrapper
 
 from .serializers import FileSerializer
 from .models import FileUpload
@@ -36,25 +37,30 @@ class FileAPI(viewsets.ViewSet):
 
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
+
     def files(self, *args, **kwargs):
         
         files = FileUpload.objects.filter(user=self.request.user)
         serializer = FileSerializer(files, many=True)
         return Response(serializer.data, status=HTTP_200_OK)
 
+
     def download(self, *args, **kwargs):
 
         download_file = get_object_or_404(FileUpload, unique_code=kwargs.get('unique_code'))
-        file_content_type = mimetypes.guess_type(download_file.name)[0]
-        file_path = settings.BASE_DIR + download_file.uploaded_file.url
-        print(settings.BASE_DIR)
-        with open(file_path, 'rb') as fp:
-            data = fp.read()
-        filename = download_file.name
-        response = HttpResponse(content_type=file_content_type)
-        response['Content-Disposition'] = 'attachment; filename={}'.format(filename)
-        response.write(data)
-        return response
+        file_path = '{}{}'.format(settings.BASE_DIR, download_file.uploaded_file.url)
+
+        if os.path.exists(file_path):
+            file_content_type = mimetypes.guess_type(file_path)[0]
+            file_wrapper = FileWrapper(open(file_path, 'rb'))
+
+            response = HttpResponse(file_wrapper, content_type=file_content_type)
+            response['Content-Disposition'] = 'attachment; filename={}'.format(download_file.name)
+
+            return response
+
+        return HttpResponseNotFound('<h3>File not found</h5>')
+
 
     def getFile(self, *args, **kwargs):
         download_file = get_object_or_404(FileUpload, unique_code=kwargs.get('unique_code'))

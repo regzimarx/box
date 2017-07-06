@@ -7,7 +7,7 @@
     .controller('DownloadController', DownloadController)
   ;
 
-  function UploadController($scope, $location, $window, Upload, FileService){
+  function UploadController($scope, $location, Upload, FileService){
     var self = this;
     $scope.baseUrl = $location.absUrl();
 
@@ -34,34 +34,25 @@
     }
 
     self.download = function(unique_code){
-      FileService.download(unique_code).then(function(resp){
-        var a = document.createElement('a');
-        a.href = resp.data;
-        a.download = '';
-        a.click();
-      })
+      FileService.download(unique_code);
     }
 
   }
 
-  function DownloadController($scope, $stateParams, $location, $window, FileService){
+  function DownloadController($scope, $stateParams, FileService){
 
     var self = this;
 
-      FileService.getFile($stateParams.unique_code).then(function(resp){
-        $scope.data = resp.data;
-      }).catch(function(error){
-        $scope.error = error;
-      })
+    FileService.getFile($stateParams.unique_code).then(function(resp){
+      $scope.data = resp.data;
+    }).catch(function(error){
+      $scope.error = error;
+    })
 
-      self.download = function(unique_code){
-        FileService.download(unique_code).then(function(resp){
-          var a = document.createElement('a');
-          a.href = resp.data;
-          a.download = '';
-          a.click();
-        })
-      }
+    self.download = function(unique_code){
+      FileService.download(unique_code);
+    }
+
   }
 
 })();
