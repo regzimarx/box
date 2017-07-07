@@ -1,0 +1,7 @@
+<div ng-show="error">{{ error.data.detail }}</div>
+<div ng-show="data">
+    <h2>File: {{ data.name }}</h2>
+    <p>Owner: {{ data.user }}</p>
+    <p>File type: {{ data.file_type }}</p>
+    <button ng-click="ctrl.download(data.unique_code)">Download</button>
+</div>

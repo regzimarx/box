@@ -1,10 +1,32 @@
-<div>
-    Drop files to upload:
-    <div ngf-drop ng-model="files" ngf-multiple="true" style="border: 1px dashed #333; padding: 50px;"">
-</div>
+<div class="container">
+    <div class="upload-section">
+        <span class="upload-field-label">Click or drag and drop files to upload</span>
+        <div ngf-drop ngf-select ng-model="files" ngf-multiple="true" class="upload-field">
+    </div>
 
-<div>
-    <ul ng-repeat="file in data">
-        <a href="{{ file.uploaded_file }}" download>{{ file.name }}</a>
-    </ul>
+    <div class="files-section">
+        <input type="text" ng-model="searchFiles" placeholder="Search files">
+        <br><br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th ng-click="order_by = 'name'">File name</th>
+                    <th ng-click="order_by = 'file_type'">File type</th>
+                    <th ng-click="order_by = 'date_uploaded'">Date uploaded</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-mouseover="hovered=true" ng-mouseleave="hovered=false" ng-repeat="file in data | orderBy: order_by | filter: searchFiles">
+                    <td>{{ file.name }}</td>
+                    <td>{{ file.file_type }}</td>
+                    <td>{{ file.date_uploaded | date: "MMM d, yyyy h:ss a" }}</td>
+                    <td ng-show="hovered">
+                        <button ng-click="ctrl.download(file.unique_code)">Download</button>
+                        <button ngclipboard data-clipboard-text="{{ baseUrl }}file/{{file.unique_code}}/">Copy share link</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

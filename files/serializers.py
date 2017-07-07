@@ -9,5 +9,5 @@ class FileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FileUpload
-        fields = ('uploaded_file', 'name', 'file_type', 'user', 'date_uploaded')
-        read_only_fields = ('name', 'file_type')
+        fields = ('uploaded_file', 'name', 'file_type', 'user', 'unique_code', 'date_uploaded')
+        read_only_fields = ('name', 'file_type', 'unique_code')

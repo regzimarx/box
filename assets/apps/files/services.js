@@ -5,11 +5,13 @@
     .service('FileService', FileService)
   ;
 
-  function FileService ($http, Upload) {
+  function FileService($http, Upload) {
 
     var action = {
-      upload : upload,
-      getFiles  : getFiles,
+      upload   : upload,
+      getFiles : getFiles,
+      download : download,
+      getFile  : getFile,
     }
 
     return action;
@@ -24,6 +26,15 @@
 
     function getFiles(){
       return $http.get('/api/files/');
+    }
+
+    function download(unique_code){
+      var hostUrl = window.location.host;
+      window.open('/api/download/' + unique_code);
+    }
+
+    function getFile(unique_code){
+      return $http.get('/api/getFile/' + unique_code);
     }
 
   }

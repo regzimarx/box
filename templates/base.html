@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 </head>
 
 <body ng-app="core">
@@ -17,6 +18,8 @@
     <script src="{% static 'node_modules/angular/angular.min.js' %}"></script>
     <script src="{% static 'node_modules/angular-ui-router/release/angular-ui-router.min.js' %}"></script>
     <script src="{% static 'node_modules/ng-file-upload/dist/ng-file-upload-all.js' %}"></script>
+    <script src="{% static 'node_modules/clipboard/dist/clipboard.js' %}"></script>
+    <script src="{% static 'node_modules/ngclipboard/dist/ngclipboard.js' %}"></script>
 
     <script src="{% static 'apps/app.js' %}"></script>
     {% if user.is_authenticated %}

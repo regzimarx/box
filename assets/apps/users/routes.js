@@ -28,6 +28,12 @@
         controller   : 'UploadController',
         controllerAs : 'ctrl'
       })
+      .state('download', {
+        url          : '/file/:unique_code/',
+        templateUrl  : TEMPLATE_URL + 'download.html',
+        controller   : 'DownloadController',
+        controllerAs : 'ctrl'
+      })
     ;
   }
 

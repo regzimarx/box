@@ -1,3 +1,6 @@
+import string
+import random
+
 from django.db import models
 
 def get_user_directory(instance, filename):
@@ -9,6 +12,7 @@ class FileUpload(models.Model):
     name = models.CharField(max_length=225)
     file_type = models.CharField(max_length=16)
     user = models.ForeignKey('users.User')
+    unique_code = models.CharField(max_length=16, unique=True, default=None)
     date_uploaded = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

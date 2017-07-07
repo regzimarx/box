@@ -3,3 +3,5 @@
 media/
 static/
 assets/node_modules/
+assets/.sass-cache/
+*.css
