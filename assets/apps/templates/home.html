@@ -7,23 +7,31 @@
     <div class="files-section">
         <input type="text" ng-model="searchFiles" placeholder="Search files">
         <br><br>
+        <input type="text" ng-model="folderName">
+        <button ng-click="ctrl.newFolder(folderName)">Add folder</button>
+        <br><br>
         <table class="table">
             <thead>
                 <tr>
-                    <th ng-click="order_by = 'name'">File name</th>
+                    <th ng-click="order_by = 'name'">Name</th>
                     <th ng-click="order_by = 'file_type'">File type</th>
                     <th ng-click="order_by = 'date_uploaded'">Date uploaded</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-mouseover="hovered=true" ng-mouseleave="hovered=false" ng-repeat="file in data | orderBy: order_by | filter: searchFiles">
+                <tr ng-repeat="folder in folders">
+                    <td><a ui-sref="folder({folder_id: folder.id})">{{ folder.name }}</a></td>
+                    <td>Folder</td>
+                    <td>{{ folder.date_created | date: "MMM d, yyyy h:ss a" }}</td>
+                </tr>
+                <tr ng-mouseover="hovered=true" ng-mouseleave="hovered=false" ng-repeat="file in userFiles | orderBy: order_by | filter: searchFiles">
                     <td>{{ file.name }}</td>
                     <td>{{ file.file_type }}</td>
                     <td>{{ file.date_uploaded | date: "MMM d, yyyy h:ss a" }}</td>
                     <td ng-show="hovered">
                         <button ng-click="ctrl.download(file.unique_code)">Download</button>
-                        <button ngclipboard data-clipboard-text="{{ baseUrl }}file/{{file.unique_code}}/">Copy share link</button>
+                        <button ngclipboard data-clipboard-text="{{ baseUrl }}/#!/file/{{file.unique_code}}/">Copy share link</button>
                     </td>
                 </tr>
             </tbody>

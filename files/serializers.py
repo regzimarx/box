@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import FileUpload
+from .models import FileUpload, Folder
 
 class FileSerializer(serializers.ModelSerializer):
 
@@ -9,5 +9,13 @@ class FileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FileUpload
-        fields = ('uploaded_file', 'name', 'file_type', 'user', 'unique_code', 'date_uploaded')
-        read_only_fields = ('name', 'file_type', 'unique_code')
+        fields = ('id', 'uploaded_file', 'name', 'file_type', 'user', 'unique_code', 'date_uploaded', 'folder',)
+        read_only_fields = ('id', 'name', 'file_type', 'unique_code')
+
+
+class FolderSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Folder
+        fields = ('id', 'name', 'parent', 'date_created', 'slug',)
+        read_only_fields = ('id', 'slug',)

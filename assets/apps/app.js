@@ -5,7 +5,7 @@
     .module('core', [
       'ui.router',
       'ngFileUpload',
-      'ngclipboard'
+      'ngclipboard',
     ])
     .constant('TEMPLATE_URL', '/static/apps/templates/')
     .config(csrf)

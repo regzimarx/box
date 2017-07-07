@@ -17,9 +17,10 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, HttpResponseNotFound
 from django.conf import settings
 from wsgiref.util import FileWrapper
+from django.utils.text import slugify
 
-from .serializers import FileSerializer
-from .models import FileUpload
+from .serializers import FileSerializer, FolderSerializer
+from .models import FileUpload, Folder
 
 class FileAPI(viewsets.ViewSet):
 
@@ -31,8 +32,12 @@ class FileAPI(viewsets.ViewSet):
         if serializer.is_valid():
             uploaded_file = self.request.data.get('uploaded_file')
             file_type = uploaded_file.name.split('.')[-1]
-            serializer.save(user=self.request.user, name=uploaded_file.name,
-                            file_type=file_type, unique_code=self.generate_unique_code(code_length=16))
+
+            serializer.save(
+                user=self.request.user, name=uploaded_file.name,
+                file_type=file_type,
+                unique_code=self.generate_unique_code(code_length=16),
+            )
             return Response(serializer.data, status=HTTP_201_CREATED)
 
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
@@ -40,7 +45,7 @@ class FileAPI(viewsets.ViewSet):
 
     def files(self, *args, **kwargs):
         
-        files = FileUpload.objects.filter(user=self.request.user)
+        files = FileUpload.objects.filter(user=self.request.user, folder=None)
         serializer = FileSerializer(files, many=True)
         return Response(serializer.data, status=HTTP_200_OK)
 
@@ -62,7 +67,7 @@ class FileAPI(viewsets.ViewSet):
         return HttpResponseNotFound('<h3>File not found</h5>')
 
 
-    def getFile(self, *args, **kwargs):
+    def get_file(self, *args, **kwargs):
         download_file = get_object_or_404(FileUpload, unique_code=kwargs.get('unique_code'))
         serializer = FileSerializer(download_file)
         return Response(serializer.data, status=HTTP_200_OK)
@@ -71,3 +76,42 @@ class FileAPI(viewsets.ViewSet):
     def generate_unique_code(self, code_length):
         chars = string.ascii_letters + string.digits
         return ''.join(random.choice(chars) for _ in range(code_length))
+
+
+class FolderAPI(viewsets.ViewSet):
+
+    permission_classes = (IsAuthenticated,)
+
+    def new_folder(self, *args, **kwargs):
+
+        if Folder.objects.filter(
+            name__exact=self.request.data.get('name'),
+            parent__id=self.request.data.get('parent')
+            ).exists():
+            data = {'error': 'Folder already exists.'}
+            return Response(data, status=HTTP_400_BAD_REQUEST)
+
+        serializer = FolderSerializer(data=self.request.data)
+
+        if serializer.is_valid():
+            serializer.save(slug=slugify(self.request.data.get('name')))
+            return Response(serializer.data, status=HTTP_200_OK)
+
+        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+
+    def folders(self, *args, **kwargs):
+        folder_id = kwargs.get('folder_id')
+        folders = Folder.objects.filter(parent=kwargs.get('folder_id'))
+        serializer = FolderSerializer(folders, many=True)
+
+        return Response(serializer.data, status=HTTP_200_OK)
+
+
+    def folder_files(self, *args, **kwargs):
+
+        files = FileUpload.objects.filter(user=self.request.user, 
+            folder=kwargs.get('folder_id'))
+        serializer = FileSerializer(files, many=True)
+        # import pdb; pdb.set_trace()
+        return Response(serializer.data, status=HTTP_200_OK)

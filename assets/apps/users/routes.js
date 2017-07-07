@@ -34,6 +34,12 @@
         controller   : 'DownloadController',
         controllerAs : 'ctrl'
       })
+      .state('folder', {
+        url          : '/:folder_id',
+        templateUrl  : TEMPLATE_URL + 'home.html',
+        controller   : 'UploadController',
+        controllerAs : 'ctrl'
+      })
     ;
   }
 
