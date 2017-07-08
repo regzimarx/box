@@ -35,7 +35,7 @@
         controllerAs : 'ctrl'
       })
       .state('folder', {
-        url          : '/:folder_id',
+        url          : '/:folder_slug',
         templateUrl  : TEMPLATE_URL + 'home.html',
         controller   : 'UploadController',
         controllerAs : 'ctrl'

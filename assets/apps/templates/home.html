@@ -9,6 +9,7 @@
         <br><br>
         <input type="text" ng-model="folderName">
         <button ng-click="ctrl.newFolder(folderName)">Add folder</button>
+        <span ng-show"errors">{{ errors.error }}</span>
         <br><br>
         <table class="table">
             <thead>
@@ -21,7 +22,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="folder in folders">
-                    <td><a ui-sref="folder({folder_id: folder.id})">{{ folder.name }}</a></td>
+                    <td><a ui-sref="folder({folder_slug: folder.slug})">{{ folder.name }}</a></td>
                     <td>Folder</td>
                     <td>{{ folder.date_created | date: "MMM d, yyyy h:ss a" }}</td>
                 </tr>

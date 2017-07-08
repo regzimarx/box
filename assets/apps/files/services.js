@@ -18,16 +18,16 @@
 
     return action;
 
-    function upload(file, folder){
+    function upload(file, folder_slug){
       return Upload.upload({
         url: '/api/upload/',
-        data: {uploaded_file: file, folder: folder},
+        data: {uploaded_file: file, folder: folder_slug},
         method: 'POST'
       });
     }
 
-    function getFiles(folder_id) {
-      return $http.get('/api/files/' + folder_id);
+    function getFiles(folder_slug) {
+      return $http.get('/api/files/' + folder_slug);
     }
 
     function download(unique_code){
@@ -55,8 +55,8 @@
 
     return actions;
 
-    function getFolders(folder_id) {
-      return $http.get('/api/folders/' + folder_id);
+    function getFolders(folder_slug) {
+      return $http.get('/api/folders/' + folder_slug);
     }
 
   }
