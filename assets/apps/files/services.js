@@ -40,7 +40,7 @@
     }
 
     function newFolder(folderName, folder){
-      data = {name: folderName, parent: folder}
+      var data = {name: folderName, parent: folder}
       return $http.post('/api/newFolder/', data);
     }
 

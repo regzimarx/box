@@ -23,6 +23,7 @@ from .serializers import FileSerializer, FolderSerializer
 from .models import FileUpload, Folder
 
 class FileAPI(viewsets.ViewSet):
+    """ Files endpoint """
 
     permission_classes = (IsAuthenticated,)
 
@@ -74,7 +75,7 @@ class FileAPI(viewsets.ViewSet):
 
     def get_file(self, *args, **kwargs):
         download_file = get_object_or_404(FileUpload, unique_code=kwargs.get(
-            'unique_code'), user=self.request.user)
+            'unique_code'))
         serializer = FileSerializer(download_file)
         return Response(serializer.data, status=HTTP_200_OK)
 
@@ -85,6 +86,7 @@ class FileAPI(viewsets.ViewSet):
 
 
 class FolderAPI(viewsets.ViewSet):
+    """ Folders endpoint """
 
     permission_classes = (IsAuthenticated,)
 

@@ -36,7 +36,7 @@
       angular.forEach(files, function(file){
 
         FileService.upload(file, folder_slug).then(function(resp){
-          $scope.userFiles.push(resp.data)
+          $scope.userFiles.push(resp.data);
         }).catch(function(error){
           $scope.error = error;
         });
@@ -52,7 +52,7 @@
 
       FileService.newFolder(folderName, folder_slug).then(function(resp){
         $scope.folderName = '';
-        $scope.folders.push(resp.data)
+        $scope.folders.push(resp.data);
       }).catch(function(errors){
         $scope.errors = errors.data;
       });

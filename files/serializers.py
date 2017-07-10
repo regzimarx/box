@@ -3,6 +3,7 @@ from rest_framework import serializers
 from .models import FileUpload, Folder
 
 class FileSerializer(serializers.ModelSerializer):
+    """ Serializer for files """
 
     user = serializers.ReadOnlyField(source='user.email')
     uploaded_file = serializers.FileField()
@@ -14,6 +15,7 @@ class FileSerializer(serializers.ModelSerializer):
 
 
 class FolderSerializer(serializers.ModelSerializer):
+    """ Serializer for folders """
 
     class Meta:
         model = Folder
