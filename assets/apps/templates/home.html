@@ -5,7 +5,7 @@
     </div>
 
     <div class="files-section">
-        <input type="text" ng-model="searchFiles" placeholder="Search files">
+        <input type="text" ng-model="searchFilesAndFolders" placeholder="Search files and folders">
         <br><br>
         <input type="text" ng-model="folderName">
         <button ng-click="ctrl.newFolder(folderName)">Add folder</button>
@@ -21,12 +21,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="folder in folders">
+                <tr ng-repeat="folder in folders | filter: searchFilesAndFolders">
                     <td><a ui-sref="folder({folder_slug: folder.slug})">{{ folder.name }}</a></td>
                     <td>Folder</td>
                     <td>{{ folder.date_created | date: "MMM d, yyyy h:ss a" }}</td>
                 </tr>
-                <tr ng-mouseover="hovered=true" ng-mouseleave="hovered=false" ng-repeat="file in userFiles | orderBy: order_by | filter: searchFiles">
+                <tr ng-mouseover="hovered=true" ng-mouseleave="hovered=false" ng-repeat="file in userFiles | orderBy: order_by | filter: searchFilesAndFolders">
                     <td>{{ file.name }}</td>
                     <td>{{ file.file_type }}</td>
                     <td>{{ file.date_uploaded | date: "MMM d, yyyy h:ss a" }}</td>

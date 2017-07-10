@@ -25,7 +25,7 @@ class Folder(models.Model):
     name = models.CharField(max_length=255)
     date_created = models.DateTimeField(auto_now_add=True)
     parent = models.ForeignKey('self', null=True)
-    slug = models.SlugField(unique=True, default=None)
+    slug = models.SlugField()
     user = models.ForeignKey('users.User')
 
     def __str__(self):

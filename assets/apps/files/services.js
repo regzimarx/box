@@ -1,7 +1,7 @@
 (function(){
 
   angular
-    .module('core')
+    .module('box')
     .service('FileService', FileService)
     .service('FolderService', FolderService)
   ;
@@ -50,7 +50,7 @@
   function FolderService($http){
 
     var actions = {
-      getFolders     : getFolders,
+      getFolders     : getFolders
     }
 
     return actions;

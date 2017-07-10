@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('core')
+    .module('box')
     .config(routes)
 
   /* UN AUTHENTICATED ROUTES
@@ -24,7 +24,6 @@
         templateUrl  : TEMPLATE_URL + 'index.html',
         controller   : 'IndexController',
         controllerAs : 'ctrl'
-
       })
     ;
 

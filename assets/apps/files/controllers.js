@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('core')
+    .module('box')
     .controller('UploadController', UploadController)
     .controller('DownloadController', DownloadController)
   ;
@@ -51,6 +51,7 @@
     self.newFolder = function(folderName){
 
       FileService.newFolder(folderName, folder_slug).then(function(resp){
+        $scope.folderName = '';
         $scope.folders.push(resp.data)
       }).catch(function(errors){
         $scope.errors = errors.data;

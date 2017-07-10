@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('core', [
+    .module('box', [
       'ui.router',
       'ngFileUpload',
       'ngclipboard',

@@ -32,7 +32,8 @@ class FileAPI(viewsets.ViewSet):
         if serializer.is_valid():
             uploaded_file = self.request.data.get('uploaded_file')
             file_type = uploaded_file.name.split('.')[-1]
-            folder = None if not self.request.data.get('folder') else Folder.objects.get(slug=self.request.data['folder'])
+            folder = None if not self.request.data.get('folder') else Folder.objects.get(
+                slug=self.request.data['folder'], user=self.request.user)
 
             serializer.save(
                 user=self.request.user, name=uploaded_file.name,
@@ -46,8 +47,10 @@ class FileAPI(viewsets.ViewSet):
 
 
     def files(self, *args, **kwargs):
-        
-        files = FileUpload.objects.filter(user=self.request.user, folder=None)
+        folder = None if not kwargs.get('folder_slug') else Folder.objects.get(
+            slug=kwargs['folder_slug'], user=self.request.user)
+        files = FileUpload.objects.filter(user=self.request.user, 
+            folder=folder)
         serializer = FileSerializer(files, many=True)
         return Response(serializer.data, status=HTTP_200_OK)
 
@@ -70,7 +73,8 @@ class FileAPI(viewsets.ViewSet):
 
 
     def get_file(self, *args, **kwargs):
-        download_file = get_object_or_404(FileUpload, unique_code=kwargs.get('unique_code'))
+        download_file = get_object_or_404(FileUpload, unique_code=kwargs.get(
+            'unique_code'), user=self.request.user)
         serializer = FileSerializer(download_file)
         return Response(serializer.data, status=HTTP_200_OK)
 
@@ -86,9 +90,11 @@ class FolderAPI(viewsets.ViewSet):
 
     def new_folder(self, *args, **kwargs):
 
-        parent = None if not self.request.data.get('parent') else Folder.objects.get(slug=self.request.data.get('parent'))
+        parent = self.get_parent_folder(self.request.data.get('parent'))
+
         if Folder.objects.filter(
-            name__exact=self.request.data.get('name')
+            name__exact=self.request.data.get('name'),
+            user=self.request.user
             ).exists():
             data = {'error': 'Folder with this name already exists.'}
             return Response(data, status=HTTP_400_BAD_REQUEST)
@@ -105,21 +111,15 @@ class FolderAPI(viewsets.ViewSet):
 
     def folders(self, *args, **kwargs):
 
-        folders = Folder.objects.filter(parent=None, user=self.request.user)
-        serializer = FolderSerializer(folders, many=True)
-        return Response(serializer.data, status=HTTP_200_OK)
+        parent = self.get_parent_folder(kwargs.get('folder_slug'))
 
-
-    def folder_folders(self, *args, **kwargs):
-        parent = None if not kwargs.get('folder_slug') else Folder.objects.get(slug=kwargs['folder_slug'])
         folders = Folder.objects.filter(parent=parent, user=self.request.user)
         serializer = FolderSerializer(folders, many=True)
         return Response(serializer.data, status=HTTP_200_OK)
 
 
-    def folder_files(self, *args, **kwargs):
-        folder = None if not kwargs.get('folder_slug') else Folder.objects.get(slug=kwargs['folder_slug'])
-        files = FileUpload.objects.filter(user=self.request.user, 
-            folder=folder)
-        serializer = FileSerializer(files, many=True)
-        return Response(serializer.data, status=HTTP_200_OK)
+    def get_parent_folder(self, folder_slug, *args, **kwargs):
+
+        parent = None if not folder_slug else Folder.objects.get(
+            slug=folder_slug, user=self.request.user)
+        return parent
